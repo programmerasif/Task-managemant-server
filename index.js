@@ -36,7 +36,66 @@ async function run() {
           res.send(result)
 
       })
+        app.post('/addTask', async (req, res) => {
+          const body = req.body
+          const result = await AllTask.insertOne(body);
+          res.send(result)
 
+      })
+      // find todo
+
+      app.get('/todo', async(req,res) =>{
+        const quary = {status: "todo"}
+        const result = await AllTask.find(quary).toArray()
+        res.send(result)
+      })
+      // Doing
+      app.get('/doing', async(req,res) =>{
+        const quary = {status: "doing"}
+        const result = await AllTask.find(quary).toArray()
+        res.send(result)
+      })
+      // Done
+      app.get('/done', async(req,res) =>{
+        const quary = {status: "done"}
+        const result = await AllTask.find(quary).toArray()
+        res.send(result)
+      })
+      // delete
+
+      app.delete('/delete/:id', async(req,res) =>{
+        const id =req.params.id ;
+        const quary = {_id : new ObjectId(id)}
+        const result = await AllTask.deleteOne(quary)
+        res.send(result)
+      })
+
+      // make Doing 
+
+      app.patch('/makeDoing/:id', async(req,res) =>{
+        const id = req.params.id;
+        const quary = {_id : new ObjectId(id)}
+        const updateDoc = {
+          $set: {
+            status: 'doing'
+          },
+        };
+        const result= await AllTask.updateOne(quary,updateDoc)
+        res.send(result)
+      })
+
+      // Make done 
+      app.patch('/makeDone/:id', async(req,res) =>{
+        const id = req.params.id;
+        const quary = {_id : new ObjectId(id)}
+        const updateDoc = {
+          $set: {
+            status: 'done'
+          },
+        };
+        const result= await AllTask.updateOne(quary,updateDoc)
+        res.send(result)
+      })
 
     
         // Send a ping to confirm a successful connection
