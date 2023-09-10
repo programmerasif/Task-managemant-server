@@ -96,9 +96,9 @@ async function run() {
         const result= await AllTask.updateOne(quary,updateDoc)
         res.send(result)
       })
-      app.patch('/makeUpdate/:id', async(req,res) =>{
-        const id = req.params.id;
-        const body = req.body
+      app.patch('/makeUpdate', async(req,res) =>{
+       const body = req.body
+        const id = body.id
         const title = body.title
         const description = body.description
         const quary = {_id : new ObjectId(id)}
